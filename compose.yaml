@@ -13,7 +13,7 @@ services:
     image: postgres:16.4
     environment:   # Set up postgres database name and password
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: stepful_demo
+      POSTGRES_DB: db_1
       POSTGRES_USER: postgres
     ports:    # Set up ports exposed for other containers to connect to
       - 5432:5432
@@ -36,7 +36,7 @@ services:
     stop_signal: SIGINT
     environment:
       FLASK_SERVER_PORT: 9091
-      DB_URI: postgresql://postgres:postgres@postgres_db/stepful_demo
+      DB_URI: postgresql://postgres:postgres@postgres_db/db_1
     volumes:
       - ./flask:/src
     depends_on:
