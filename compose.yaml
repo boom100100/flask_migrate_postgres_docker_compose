@@ -39,6 +39,7 @@ services:
       DB_URI: postgresql://postgres:postgres@postgres_db/db_1
     volumes:
       - ./flask:/src
+      # expected directory structure: flask/app/app.py
     depends_on:
       postgres_db:
         condition: service_healthy
