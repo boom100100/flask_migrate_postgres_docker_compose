@@ -1,21 +1,15 @@
 # Run as
 # docker-compose build; docker-compose up -d
-# Check with
-# docker ps
-# Then check the logs with
-# docker logs --tail 50 $container_id
-# docker-compose images
-# docker-compose logs --tail 20 repo_name
 
 services:
 
   postgres_db:
     image: postgres:16.4
-    environment:   # Set up postgres database name and password
+    environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: db_1
       POSTGRES_USER: postgres
-    ports:    # Set up ports exposed for other containers to connect to
+    ports:
       - 5432:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
@@ -23,16 +17,11 @@ services:
       retries: 5
       start_period: 30s
       timeout: 10s
-    # in the container, check the status:
-    # su postgres
-    # pg_ctl status
 
   backend:
     build:
       context: flask
       target: builder
-    # flask requires SIGINT to stop gracefully
-    # (default stop signal from Compose is SIGTERM)
     stop_signal: SIGINT
     environment:
       FLASK_SERVER_PORT: 9091
