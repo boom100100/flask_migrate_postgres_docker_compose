@@ -12,21 +12,5 @@ RUN pip install pipenv
 RUN pipenv requirements > requirements.txt
 RUN pip install -r requirements.txt
 
-CMD ["python", "-m", "app.app"]
-
-FROM builder AS dev-envs
-
-RUN <<EOF
-apk update
-apk add git
-EOF
-
-RUN <<EOF
-addgroup -S docker
-adduser -S --shell /bin/bash --ingroup docker vscode
-EOF
-
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
-
-CMD ["python", "-m", "app.app"]
+# start with flask migrate and then run the server
+ENTRYPOINT flask db upgrade && python -m app.app
