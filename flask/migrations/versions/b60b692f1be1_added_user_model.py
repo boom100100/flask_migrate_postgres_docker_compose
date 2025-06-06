@@ -1,4 +1,4 @@
-"""Added coach, meeting, student, user models.
+"""Added user model.
 
 Revision ID: b60b692f1be1
 Revises: 
