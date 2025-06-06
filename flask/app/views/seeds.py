@@ -7,6 +7,7 @@ from app.database import db
 class SeedsView(MethodView):
     def get(self):
         try:
+            # quick check: flask db upgrade ran successfully, so the users table should exist.
             db.session.execute(text("SELECT id FROM users LIMIT 1;"))
             response = jsonify({
                 "result": "success",
